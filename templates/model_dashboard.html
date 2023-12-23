@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Environmental THREE JS</title>
+		<style>
+			body { margin: 0; }
+		</style>
+		<script type="module" crossorigin src="{% static '/dist_dashboard/assets/index-Hs4CCBMi.js' %}" defer></script>
+	</head>
+	<body>
+
+
+
+
+
+
+		<script defer type="module">
+			run_dashboard_threejs("{% static '/dist_dashboard/images/background.jpg' %}", "{% static '/dist_dashboard/fonts_json/droid/droid_sans_regular.typeface.json' %}", "{% url 'add' %}", "{% url 'view' %}");
+		</script>
+
+    </body>
+</html>

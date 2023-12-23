@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Environmental THREE JS</title>
+		<style>
+			body { margin: 0; }
+		</style>
+		<script type="module" crossorigin src="{% static 'dist_view/assets/index-45OsRXkL.js' %}" defer></script>
+	</head>
+	<body>
+
+
+		
+		<!-- <h5>{{json_data}}</h5> -->
+
+		<script type="module" defer>
+			// var objects_data= [
+			// 	{
+			// 		'object_name': 'Object_12', 
+			// 		'object_description': "This is a table worth $50"
+			// 	},
+
+			// 	{
+			// 		'object_name': 'Object_10', 
+			// 		'object_description': "This is another object"
+			// 	}
+			// ];
+
+			// var model_data= {
+            //     'model_name': "room1",
+            //     'data': objects_data
+            // }
+
+			var model_data= {{json_data|safe}};
+			console.log(model_data);
+			run_threejs("{% static 'dist_view/models/room/scene.gltf' %}", "{% static 'dist_view/images/background2.jpg' %}", "{% static 'dist_view/fonts_json/droid/droid_sans_regular.typeface.json' %}", model_data);
+		</script>
+
+    </body>
+</html>

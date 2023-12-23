@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Environmental THREE JS</title>
+		<style>
+			body { margin: 0; }
+		</style>
+		<script type="module" crossorigin src="{% static '/dist_add/assets/index-PURm2qEz.js' %}" defer></script>
+		<link rel="stylesheet" crossorigin href="{% static '/dist_add/assets/index-pOuO435R.css' %}">
+	</head>
+	<body>
+
+
+
+
+		<script type="module" defer>
+			run_add_threejs("{% static 'dist_add/models/room/scene.gltf' %}", "{% static 'dist_add/images/background2.jpg' %}", "{% static 'dist_add/fonts_json/droid/droid_sans_regular.typeface.json' %}");
+		</script>
+		
+		<div id="canvas-container"></div>
+
+		<!-- Object information input dialog  -->
+		<div onclick="stop_propagation(event)" id="object-info-dialog" class="hidden">
+	
+			<label onclick="stop_propagation(event)" for="objectDescription">Object Description:</label>
+			<input onclick="stop_propagation(event)" type="text" id="objectDescription" placeholder="Enter object description">
+	
+			<button type="button" onclick="add_information(event)">Add Data</button>
+		</div>
+
+
+		<button id="save-button" onclick="finalize(event)">Upload Data</button>
+		
+		<script type="module" defer>
+			function finalize(event){
+				const model_data= submit_information(event);
+				const model_data_json= JSON.stringify(model_data)
+				if (model_data != {} || model_data != null || model_data != undefined){
+					// Send POST request with JSON data
+					fetch('/model-view', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token if not using csrf_exempt
+						},
+						// body: model_data
+						body: model_data_json
+					})
+					.then(response => response.json())
+					.then(data => {
+						console.log("SHOW SOMETHING");
+						console.log(data);
+						// Handle the response from the server
+					})
+					.catch(error => console.error('Error:', error));
+
+					
+					alert("Upload success, your data has been stored temporarily, you will be redirected to the view page.");
+					window.location.href= "{% url 'view' %}";
+				}
+			}
+			window.finalize= finalize;
+		</script>
+
+
+
+    </body>
+</html>
